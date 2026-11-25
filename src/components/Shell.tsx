@@ -1,13 +1,11 @@
 import Link from "next/link";
+import { LogoMark } from "./LogoMark";
 import { MobileMenu } from "./MobileMenu";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2" aria-label="QuoteBench home">
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden>
-        <rect width="26" height="26" rx="7" fill="#5b2ca0" />
-        <path d="M7 8h12M7 13h8M7 18h5" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
+      <LogoMark size={30} />
       <span className={`text-[22px] font-medium tracking-tight ${light ? "text-white" : "text-ink"}`}>quotebench</span>
     </Link>
   );

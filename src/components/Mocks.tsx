@@ -15,7 +15,7 @@ export function BenchmarkMock() {
           <div className="h-2 rounded-full bg-soft"><div className="h-2 rounded-full bg-gradient-to-r from-brand to-brand2" style={{ width: `${w}%` }} /></div>
         </div>
       ))}
-      <div className="mt-5 rounded-xl bg-[#f4effc] px-4 py-3 text-sm text-brand">Quote sits above the estimated market range.</div>
+      <div className="mt-5 rounded-xl bg-[#f8ecf0] px-4 py-3 text-sm text-brand">Quote sits above the estimated market range.</div>
     </div>
   );
 }
@@ -89,7 +89,7 @@ export function TeamTabs() {
           <div className="mb-4 flex items-center justify-between"><div className="eyebrow">Upcoming renewals</div><Tag /></div>
           {[["DD", "Datadog", "$48,000, Mar 15", "Commit leverage"], ["SF", "Salesforce", "$125,000, Apr 2", "Q1 timing"], ["ZM", "Zoom", "$32,000, Apr 18", "Multi-year"], ["NT", "Notion", "$18,500, May 5", ""]].map(([i, n, d, t]) => (
             <div key={n} className="flex items-center gap-3 border-b border-line py-3 last:border-0">
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f4effc] text-xs font-semibold text-brand">{i}</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f8ecf0] text-xs font-semibold text-brand">{i}</span>
               <div className="flex-1"><div className="text-[15px] font-medium text-ink">{n}</div><div className="text-sm text-muted">{d}</div></div>
               {t && <span className="rounded-full bg-soft px-2.5 py-1 text-xs text-muted">{t}</span>}
             </div>

@@ -15,7 +15,7 @@ export function Marketplace() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {list.map(([n, c, d]) => (
           <Link key={n} href={`/signup`} className="card group p-6 transition hover:-translate-y-0.5 hover:border-brand">
-            <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f4effc] font-semibold text-brand">{n[0]}</span>
+            <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f8ecf0] font-semibold text-brand">{n[0]}</span>
               <div><div className="font-medium text-ink">{n}</div><div className="text-xs text-muted">{c}</div></div></div>
             <p className="mt-4 text-[15px] leading-relaxed">{d}</p>
             <div className="mt-4 text-sm font-medium text-brand">Benchmark this supplier</div>

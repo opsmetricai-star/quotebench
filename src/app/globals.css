@@ -4,11 +4,11 @@
   --ink: #1a0513;
   --body: #34343a;
   --muted: #6b6b76;
-  --line: #e8e6ec;
-  --soft: #f5f3f8;
-  --brand: #5b2ca0;
-  --brand-2: #7c3aed;
-  --night: #0a0812;
+  --line: #ece6e9;
+  --soft: #f8f4f5;
+  --brand: #7a1f3d;
+  --brand-2: #a3294f;
+  --night: #150810;
 }
 
 @theme inline {
@@ -43,7 +43,7 @@ body {
 .btn-light { background: #fff; color: var(--ink); }
 .card { border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: 0 1px 2px rgba(26,5,19,.04), 0 12px 32px -16px rgba(26,5,19,.12); }
 .input { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 15px; outline: none; background: #fff; color: var(--ink); }
-.input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(91,44,160,.15); }
+.input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(122,31,61,.15); }
 .marquee { display: flex; gap: 64px; width: max-content; animation: marq 32s linear infinite; }
 @keyframes marq { to { transform: translateX(-50%); } }
 .fade-up { animation: fu .6s ease both; }

@@ -30,7 +30,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         </div>
       </aside>
       <div className="flex-1 p-5 md:p-10">
-        {!!count && <div className="mb-5 rounded-xl bg-[#f4effc] px-4 py-3 text-sm text-brand">You have {count} unread notification{count > 1 ? "s" : ""}. <Link href="/app/settings" className="underline">View</Link></div>}
+        {!!count && <div className="mb-5 rounded-xl bg-[#f8ecf0] px-4 py-3 text-sm text-brand">You have {count} unread notification{count > 1 ? "s" : ""}. <Link href="/app/settings" className="underline">View</Link></div>}
         <div className="mx-auto max-w-[1000px]">{children}</div>
       </div>
     </div>
