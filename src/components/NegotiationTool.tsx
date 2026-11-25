@@ -27,7 +27,7 @@ export function NegotiationTool({ benchmarkId, supplier, current, target }: { be
       </div>
       <textarea name="context" rows={2} className="input" placeholder="Context (optional): deadlines, competitors, relationship notes" />
       {err && <p role="alert" className="text-sm text-red-600">{err}</p>}
-      <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Building plan…" : "Build plan"}</button>
+      <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Building plan..." : "Build plan"}</button>
     </form>
   );
 }

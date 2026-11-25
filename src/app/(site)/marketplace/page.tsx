@@ -7,7 +7,7 @@ export const metadata = { title: "Marketplace | QuoteBench" };
 export default function Page() {
   return (
     <>
-      <PageHero eyebrow="Marketplace" title="Check the price of any software before you buy" primary={null} secondary={null} />
+      <PageHero eyebrow="Marketplace" title="Price any software contract before you sign it" cta={false} />
       <Marketplace />
       <CtaBand />
     </>

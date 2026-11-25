@@ -14,7 +14,7 @@ export default async function Benchmarks() {
           <div className="overflow-x-auto"><table className="w-full text-left text-[15px]"><thead className="text-xs text-muted"><tr><th className="py-2">Supplier</th><th>Type</th><th>Quoted</th><th>Savings</th><th>Date</th><th /></tr></thead><tbody>
             {(data ?? []).map((b) => (<tr key={b.id} className="border-t border-line"><td className="py-2.5 text-ink">{b.supplier}</td><td>{b.purchase_type}</td><td>${Math.round(Number(b.quoted_total)).toLocaleString()}</td>
               <td>${Math.round((b.result as { potentialSavings?: number }).potentialSavings ?? 0).toLocaleString()}</td><td>{new Date(b.created_at).toLocaleDateString()}</td>
-              <td><Link className="text-brand" href={`/app/negotiations?benchmark=${b.id}`}>Plan →</Link></td></tr>))}</tbody></table></div>}</div>
+              <td><Link className="text-brand" href={`/app/negotiations?benchmark=${b.id}`}>Open plan</Link></td></tr>))}</tbody></table></div>}</div>
     </div>
   );
 }

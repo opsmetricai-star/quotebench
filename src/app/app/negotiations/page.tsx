@@ -21,7 +21,7 @@ export default async function Negotiations({ searchParams }: { searchParams: Pro
         return (
           <details key={n.id} className="card p-6">
             <summary className="flex cursor-pointer flex-wrap items-center justify-between gap-3">
-              <span className="text-lg font-medium text-ink">{n.supplier} <span className="text-sm font-normal text-muted">${Math.round(n.current_price).toLocaleString()} → ${Math.round(n.target_price).toLocaleString()}{n.final_price ? ` · closed at $${Math.round(n.final_price).toLocaleString()}` : ""}</span></span>
+              <span className="text-lg font-medium text-ink">{n.supplier} <span className="text-sm font-normal text-muted">${Math.round(n.current_price).toLocaleString()} to ${Math.round(n.target_price).toLocaleString()}{n.final_price ? ` · closed at $${Math.round(n.final_price).toLocaleString()}` : ""}</span></span>
             </summary>
             <div className="mt-4 space-y-4">
               <StatusControl id={n.id} status={n.status} current={n.current_price} />

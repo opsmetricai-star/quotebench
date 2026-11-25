@@ -20,7 +20,7 @@ export function MobileMenu({ items }: { items: { href: string; label: string }[]
           ))}
           <div className="mt-5 flex gap-3">
             <Link href="/login" className="btn btn-line flex-1 justify-center">Log in</Link>
-            <Link href="/signup" className="btn btn-dark flex-1 justify-center">Try for free</Link>
+            <Link href="/signup" className="btn btn-dark flex-1 justify-center">Sign up</Link>
           </div>
         </div>
       )}

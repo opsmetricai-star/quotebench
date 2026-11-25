@@ -39,6 +39,6 @@ export async function POST(req: Request) {
     await recordUsage(user.id, "contract_review");
     return NextResponse.json({ id: data.id, review });
   } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : "Review failed." }, { status: e instanceof AiConfigError ? 503 : 502 });
+    return NextResponse.json({ error: e instanceof Error ? e.message : "Audit failed." }, { status: e instanceof AiConfigError ? 503 : 502 });
   }
 }

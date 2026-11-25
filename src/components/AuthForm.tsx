@@ -5,40 +5,59 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 type Mode = "login" | "signup" | "forgot" | "reset";
-const TITLES: Record<Mode, string> = { login: "Log in", signup: "Create your account", forgot: "Reset your password", reset: "Choose a new password" };
+const HEADINGS: Record<Mode, string> = {
+  login: "Log in to QuoteBench",
+  signup: "Create your QuoteBench account",
+  forgot: "Reset your password",
+  reset: "Choose a new password",
+};
+const BUTTONS: Record<Mode, string> = { login: "Log in", signup: "Create account", forgot: "Send reset link", reset: "Save new password" };
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter();
   const params = useSearchParams();
+  const rawPlan = params.get("plan");
+  const plan = rawPlan === "plan47" || rawPlan === "plan97" ? rawPlan : null;
+  const afterAuth = plan ? `/app/billing?plan=${plan}` : "/app";
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ type: "error" | "ok"; text: string } | null>(
-    params.get("error") === "config" ? { type: "error", text: "Supabase is not configured on this deployment." } : null,
+    params.get("error") ? { type: "error", text: "Sign-in is temporarily unavailable. Please try again shortly." } : null,
   );
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setBusy(true); setMsg(null);
+    setBusy(true);
+    setMsg(null);
     const f = new FormData(e.currentTarget);
     const email = String(f.get("email") ?? "");
     const password = String(f.get("password") ?? "");
     try {
       const sb = createClient();
-      const origin = window.location.origin;
+      // Links in emails must open the live site, so prefer the configured public URL.
+      const origin = (process.env.NEXT_PUBLIC_SITE_URL || window.location.origin).replace(/\/$/, "");
       if (mode === "login") {
         const { error } = await sb.auth.signInWithPassword({ email, password });
         if (error) throw error;
         const next = params.get("next");
-        router.replace(next && next.startsWith("/app") ? next : "/app");
+        router.replace(next && next.startsWith("/app") ? next : afterAuth);
         router.refresh();
       } else if (mode === "signup") {
         if (password.length < 8) throw new Error("Password must be at least 8 characters.");
         const { data, error } = await sb.auth.signUp({
-          email, password,
-          options: { data: { full_name: f.get("name"), company: f.get("company") }, emailRedirectTo: `${origin}/auth/callback?next=/app` },
+          email,
+          password,
+          options: {
+            data: { full_name: f.get("name"), company: f.get("company") },
+            emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(afterAuth)}`,
+          },
         });
         if (error) throw error;
-        if (data.session) { router.replace("/app"); router.refresh(); }
-        else setMsg({ type: "ok", text: "Check your email to confirm your account, then log in." });
+        if (data.session) {
+          router.replace(afterAuth);
+          router.refresh();
+        } else {
+          setMsg({ type: "ok", text: "Check your inbox and confirm your email to activate the account, then log in." });
+        }
       } else if (mode === "forgot") {
         const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: `${origin}/auth/callback?next=/reset-password` });
         if (error) throw error;
@@ -50,22 +69,36 @@ export function AuthForm({ mode }: { mode: Mode }) {
         router.replace("/app");
       }
     } catch (err) {
-      setMsg({ type: "error", text: err instanceof Error ? err.message : "Something went wrong." });
-    } finally { setBusy(false); }
+      setMsg({ type: "error", text: err instanceof Error ? err.message : "Something went wrong. Please try again." });
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
     <div className="mx-auto w-full max-w-[420px] px-5 py-16">
-      <h1 className="text-center text-3xl font-medium tracking-tight text-ink">{TITLES[mode]}</h1>
+      <h1 className="text-center text-3xl font-medium tracking-tight text-ink">{HEADINGS[mode]}</h1>
       <form onSubmit={submit} className="card mt-8 space-y-4 p-7">
-        {mode === "signup" && (<><input name="name" required className="input" placeholder="Full name" autoComplete="name" /><input name="company" className="input" placeholder="Company" autoComplete="organization" /></>)}
+        {mode === "signup" && (
+          <>
+            <input name="name" required className="input" placeholder="Full name" autoComplete="name" />
+            <input name="company" required className="input" placeholder="Company" autoComplete="organization" />
+          </>
+        )}
         {mode !== "reset" && <input name="email" type="email" required className="input" placeholder="Work email" autoComplete="email" />}
-        {mode !== "forgot" && <input name="password" type="password" required className="input" placeholder={mode === "reset" ? "New password" : "Password"} autoComplete={mode === "login" ? "current-password" : "new-password"} />}
+        {mode !== "forgot" && (
+          <input name="password" type="password" required className="input" placeholder={mode === "reset" ? "New password" : "Password"} autoComplete={mode === "login" ? "current-password" : "new-password"} />
+        )}
         {msg && <p role="alert" className={`text-sm ${msg.type === "error" ? "text-red-600" : "text-emerald-700"}`}>{msg.text}</p>}
-        <button disabled={busy} className="btn btn-dark w-full justify-center disabled:opacity-60">{busy ? "Please wait…" : TITLES[mode]}</button>
+        <button disabled={busy} className="btn btn-dark w-full justify-center disabled:opacity-60">{busy ? "Please wait..." : BUTTONS[mode]}</button>
       </form>
       <div className="mt-6 space-y-2 text-center text-sm">
-        {mode === "login" && (<><p><Link className="text-brand" href="/forgot-password">Forgot your password?</Link></p><p>New here? <Link className="text-brand" href="/signup">Start free</Link></p></>)}
+        {mode === "login" && (
+          <>
+            <p><Link className="text-brand" href="/forgot-password">Forgot your password?</Link></p>
+            <p>New to QuoteBench? <Link className="text-brand" href="/signup">Sign up</Link></p>
+          </>
+        )}
         {mode === "signup" && <p>Already have an account? <Link className="text-brand" href="/login">Log in</Link></p>}
         {mode === "forgot" && <p><Link className="text-brand" href="/login">Back to log in</Link></p>}
       </div>

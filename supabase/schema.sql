@@ -124,3 +124,11 @@ create table if not exists public.demo_requests (
   created_at timestamptz not null default now()
 );
 alter table public.demo_requests enable row level security;
+
+-- Table privileges (newer Supabase projects do not auto-grant). RLS still limits rows to the owner.
+grant usage on schema public to anon, authenticated, service_role;
+grant all on all tables in schema public to service_role;
+grant select, update on public.profiles to authenticated;
+grant select on public.subscriptions to authenticated;
+grant select, insert, update, delete on public.benchmarks, public.contracts, public.negotiations, public.notifications to authenticated;
+grant select on public.usage_events to authenticated;

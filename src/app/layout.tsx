@@ -5,9 +5,9 @@ import "./globals.css";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "QuoteBench — AI software pricing and negotiation",
+  title: "QuoteBench: the AI engine for software pricing and negotiation",
   description:
-    "QuoteBench benchmarks your software quotes against real deal data, reviews contracts, and plans negotiations with an AI agent.",
+    "QuoteBench is the AI engine that benchmarks software quotes, audits contracts and plans negotiations for procurement, finance and IT teams.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

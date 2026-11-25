@@ -6,7 +6,7 @@ export async function proxy(request: NextRequest) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) {
-    // Supabase not configured yet: keep /app locked rather than open.
+    // Missing auth configuration: keep /app locked rather than open.
     if (request.nextUrl.pathname.startsWith("/app")) {
       return NextResponse.redirect(new URL("/login?error=config", request.url));
     }

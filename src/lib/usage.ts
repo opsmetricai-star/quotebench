@@ -35,7 +35,7 @@ export async function checkQuota(userId: string, kind: UsageKind) {
   const limit = PLANS[planId][LIMIT_KEY[kind]];
   const used = (await getUsage(userId))[kind];
   return used >= limit
-    ? `You have used ${used} of ${limit} ${kind.replace("_", " ")}s this month on the ${PLANS[planId].name} plan. Upgrade on the Billing page.`
+    ? `You have used ${used} of ${limit} ${{ benchmark: "benchmarks", contract_review: "contract audits", negotiation_plan: "negotiation plans" }[kind]} this month on the ${PLANS[planId].name} plan. Upgrade on the Billing page.`
     : null;
 }
 

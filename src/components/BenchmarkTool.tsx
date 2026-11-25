@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { Cross } from "./Icons";
 
 type Item = { name: string; quantity: string; unitPrice: string };
 type R = {
@@ -49,14 +50,14 @@ export function BenchmarkTool() {
               <input className="input" required placeholder="Product / SKU" value={it.name} onChange={(e) => set(i, "name", e.target.value)} />
               <input className="input" required type="number" min="0" step="any" placeholder="Qty" value={it.quantity} onChange={(e) => set(i, "quantity", e.target.value)} />
               <input className="input" required type="number" min="0" step="any" placeholder="$ / unit / yr" value={it.unitPrice} onChange={(e) => set(i, "unitPrice", e.target.value)} />
-              <button type="button" aria-label="Remove item" disabled={items.length === 1} onClick={() => setItems(items.filter((_, j) => j !== i))} className="text-muted disabled:opacity-30">✕</button>
+              <button type="button" aria-label="Remove item" disabled={items.length === 1} onClick={() => setItems(items.filter((_, j) => j !== i))} className="text-muted disabled:opacity-30"><Cross /></button>
             </div>
           ))}
           <button type="button" onClick={() => setItems([...items, { name: "", quantity: "", unitPrice: "" }])} className="text-sm text-brand">+ Add line item</button>
         </div>
         <textarea name="notes" className="input" rows={2} placeholder="Notes (optional): competitors considered, deadlines, discounts already offered" />
         {err && <p role="alert" className="text-sm text-red-600">{err} {err.includes("Upgrade") && <Link href="/app/billing" className="underline">Billing</Link>}</p>}
-        <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Benchmarking…" : "Run benchmark"}</button>
+        <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Benchmarking..." : "Run benchmark"}</button>
       </form>
 
       {out && (
@@ -64,7 +65,7 @@ export function BenchmarkTool() {
           <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-xl font-medium text-ink">{out.supplier}</h2>
             <span className={`rounded-full px-3 py-1 text-xs font-medium ${out.result.verdict === "above_market" ? "bg-red-50 text-red-700" : out.result.verdict === "in_range" ? "bg-emerald-50 text-emerald-700" : "bg-soft text-muted"}`}>{out.result.verdict.replace("_", " ")}</span></div>
           <div className="grid gap-4 sm:grid-cols-4">
-            {[["Quoted total", money(out.result.quotedTotal)], ["Blended / unit", money(out.result.quotedBlendedUnitPrice)], ["Market range / unit", `${money(out.result.marketLow)} – ${money(out.result.marketHigh)}`], ["Potential savings", `${money(out.result.potentialSavings)} (${out.result.savingsPct.toFixed(1)}%)`]].map(([l, v]) => (
+            {[["Quoted total", money(out.result.quotedTotal)], ["Blended / unit", money(out.result.quotedBlendedUnitPrice)], ["Market range / unit", `${money(out.result.marketLow)} to ${money(out.result.marketHigh)}`], ["Potential savings", `${money(out.result.potentialSavings)} (${out.result.savingsPct.toFixed(1)}%)`]].map(([l, v]) => (
               <div key={l} className="rounded-xl bg-soft p-4"><div className="text-xs text-muted">{l}</div><div className="mt-1 font-medium text-ink">{v}</div></div>))}
           </div>
           <p>{out.result.summary} <span className="text-muted">Confidence: {out.result.confidence}.</span></p>

@@ -18,10 +18,10 @@ export function Marketplace() {
             <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f4effc] font-semibold text-brand">{n[0]}</span>
               <div><div className="font-medium text-ink">{n}</div><div className="text-xs text-muted">{c}</div></div></div>
             <p className="mt-4 text-[15px] leading-relaxed">{d}</p>
-            <div className="mt-4 text-sm font-medium text-brand">Benchmark a quote →</div>
+            <div className="mt-4 text-sm font-medium text-brand">Benchmark this supplier</div>
           </Link>
         ))}
-        {list.length === 0 && <p className="text-muted">No matches. Any supplier can still be benchmarked inside the app.</p>}
+        {list.length === 0 && <p className="text-muted">No match in the directory. Any supplier can be benchmarked inside the app.</p>}
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export default async function Dashboard() {
   ]);
   const identified = (benchmarks ?? []).reduce((s, b) => s + ((b.result as { potentialSavings?: number }).potentialSavings ?? 0), 0);
   const realized = (negs ?? []).filter((n) => n.status === "closed" && n.final_price).reduce((s, n) => s + (Number(n.current_price) - Number(n.final_price)), 0);
-  const kinds: [UsageKind, string][] = [["benchmark", "Benchmarks"], ["contract_review", "Contract reviews"], ["negotiation_plan", "Negotiation plans"]];
+  const kinds: [UsageKind, string][] = [["benchmark", "Benchmarks"], ["contract_review", "Contract audits"], ["negotiation_plan", "Negotiation plans"]];
   return (
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3"><h1 className="text-3xl font-medium tracking-tight text-ink">Dashboard</h1>

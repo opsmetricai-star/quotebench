@@ -22,7 +22,7 @@ export function ContractTool() {
       <div><label className="text-sm text-muted">Optional file to store (max 5 MB; .txt is also read automatically)</label>
         <input name="file" type="file" accept=".txt,.md,.pdf,.doc,.docx" className="mt-1 block text-sm" /></div>
       {err && <p role="alert" className="text-sm text-red-600">{err}</p>}
-      <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Reviewing…" : "Review contract"}</button>
+      <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Auditing..." : "Audit contract"}</button>
     </form>
   );
 }

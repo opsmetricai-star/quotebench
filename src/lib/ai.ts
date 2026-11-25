@@ -9,21 +9,30 @@ export class AiConfigError extends Error {}
 
 async function generateJson<T>(prompt: string, schema: z.ZodType<T>): Promise<T> {
   const key = process.env.GEMINI_API_KEY;
-  if (!key) throw new AiConfigError("GEMINI_API_KEY is not configured on the server.");
-  const model = new GoogleGenerativeAI(key).getGenerativeModel({
-    model: process.env.GEMINI_MODEL || "gemini-3.8-flash",
-    generationConfig: { responseMimeType: "application/json", temperature: 0.3 },
-  });
+  if (!key) throw new AiConfigError("The AI engine is temporarily unavailable. Please try again shortly.");
+  const client = new GoogleGenerativeAI(key);
+  // Try the configured model first, then fall back if it is overloaded or retired.
+  const models = [...new Set([process.env.GEMINI_MODEL, "gemini-3.5-flash", "gemini-flash-latest"].filter(Boolean))] as string[];
   let lastErr: unknown;
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (const name of models) {
+    const model = client.getGenerativeModel(
+      {
+        model: name,
+        // thinkingConfig is supported by the API but not yet typed in this SDK. Minimal thinking cuts latency from ~38s to ~4s.
+        generationConfig: { responseMimeType: "application/json", temperature: 0.3, thinkingConfig: { thinkingLevel: "minimal" } } as never,
+      },
+      { timeout: 40_000 },
+    );
     try {
       const res = await model.generateContent(prompt);
       return schema.parse(JSON.parse(res.response.text()));
     } catch (e) {
-      lastErr = e;
+      console.error(`[ai] ${name} failed:`, e instanceof Error ? e.message.slice(0, 400) : e);
+      if (!(lastErr instanceof z.ZodError)) lastErr = e; // keep a validation error over a later overload error
     }
   }
-  throw new Error(`AI response failed validation: ${lastErr instanceof Error ? lastErr.message : "unknown"}`);
+  console.error("[ai] all models failed:", lastErr instanceof Error ? lastErr.message.slice(0, 600) : lastErr);
+  throw new Error("Quinn could not complete the analysis. Please try again in a moment.");
 }
 
 export const lineItemSchema = z.object({
@@ -49,7 +58,7 @@ const marketSchema = z.object({
   typicalDiscountPctHigh: z.number().min(0).max(90),
   confidence: z.enum(["low", "medium", "high"]),
   leverage: z.array(z.string()).min(1).max(6),
-  alternatives: z.array(z.object({ name: z.string(), note: z.string() })).max(4),
+  alternatives: z.array(z.union([z.object({ name: z.string(), note: z.string() }), z.string().transform((s) => ({ name: s.split(/[:-]/)[0].trim(), note: s }))])).max(4),
   summary: z.string(),
 });
 
@@ -63,7 +72,7 @@ Term: ${input.termMonths} months. Items (name, quantity, quoted unit price per u
 Notes: ${input.notes ?? "none"}.
 Return JSON with keys: marketUnitPriceLow, marketUnitPriceHigh (blended per-unit annual price a comparable buyer plausibly pays, same currency as the quote),
 typicalDiscountPctLow, typicalDiscountPctHigh (off list price suppliers commonly give at this size), confidence (low|medium|high; use low if you are unsure of this supplier),
-leverage (3-5 concrete negotiation levers), alternatives (up to 3 competing products with a short note), summary (2 sentences).
+leverage (3-5 concrete negotiation levers), alternatives (up to 3 objects of the exact form {"name": string, "note": string}), summary (2 sentences).
 Be honest about uncertainty. Do not invent precise statistics.`,
     marketSchema,
   );
@@ -125,7 +134,7 @@ export async function buildNegotiationPlan(args: {
   return generateJson(
     `You are a procurement negotiation coach. Build a plan to move "${args.supplier}" from ${args.currentPrice} to about ${args.targetPrice} (annual total).
 Known leverage: ${JSON.stringify(args.leverage)}. Extra context: ${args.context ?? "none"}.
-Return JSON: strategy (short paragraph), steps (3-6 of {title, detail}), concessionsToAsk (non-price terms), fallback (what to do if they hold), emailDraft ({subject, body} first outreach, professional, no invented facts, use [Your Name] placeholder).`,
+Return JSON: strategy (short paragraph), steps (3-6 objects of the exact form {"title": string, "detail": string}), concessionsToAsk (non-price terms), fallback (what to do if they hold), emailDraft ({subject, body} first outreach, professional, no invented facts, use [Your Name] placeholder).`,
     planSchema,
   );
 }
