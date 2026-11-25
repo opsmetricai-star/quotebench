@@ -1,0 +1,18 @@
+export const SUPPLIERS: [string, string, string][] = [
+  ["Salesforce", "CRM", "Customer relationship management across sales, service and marketing."],
+  ["Slack", "Collaboration", "Team messaging, huddles and workflow automation."],
+  ["Zoom", "Collaboration", "Meetings, phone and chat in one communications platform."],
+  ["Atlassian", "Dev tools", "Jira, Confluence and the Atlassian project suite."],
+  ["Okta", "Security", "Single sign-on and identity management."],
+  ["Adobe", "Design", "Creative, document and marketing software."],
+  ["Zendesk", "Support", "Omnichannel customer service software."],
+  ["GitHub", "Dev tools", "Source hosting, code review and CI."],
+  ["Figma", "Design", "Collaborative interface design."],
+  ["HubSpot", "CRM", "Marketing, sales and service hub."],
+  ["Datadog", "Observability", "Infrastructure monitoring, logs and APM."],
+  ["DocuSign", "Legal", "E-signature and agreement management."],
+  ["Notion", "Productivity", "Docs, wikis and project tracking."],
+  ["Asana", "Productivity", "Work management for teams."],
+  ["Snowflake", "Data", "Cloud data platform."],
+  ["Workday", "HR", "Finance and HR cloud applications."],
+];
