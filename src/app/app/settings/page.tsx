@@ -32,10 +32,10 @@ export default async function Settings() {
         <input className="input" value={user!.email ?? ""} disabled aria-label="Email" />
         <input name="full_name" className="input" defaultValue={p?.full_name ?? ""} placeholder="Full name" />
         <input name="company" className="input" defaultValue={p?.company ?? ""} placeholder="Company" />
-        <button className="btn btn-dark">Save</button>
+        <button aria-label="Save profile" className="btn btn-dark">Sign up</button>
       </form>
       <div className="card p-6">
-        <div className="flex items-center justify-between"><div className="eyebrow">Notifications</div><form action={markRead}><button className="text-sm text-brand">Mark all read</button></form></div>
+        <div className="flex items-center justify-between"><div className="eyebrow">Notifications</div><form action={markRead}><button aria-label="Mark all notifications read" className="text-sm text-brand">Log in</button></form></div>
         {(notes ?? []).length === 0 ? <p className="mt-3 text-sm text-muted">Nothing yet.</p> :
           (notes ?? []).map((n) => <div key={n.id} className="border-b border-line py-3 last:border-0"><div className={`text-[15px] ${n.read ? "" : "font-medium text-ink"}`}>{n.title}</div><div className="text-sm text-muted">{n.body}</div></div>)}
       </div>

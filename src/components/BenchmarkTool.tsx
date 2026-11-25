@@ -39,6 +39,7 @@ export function BenchmarkTool() {
   return (
     <div className="space-y-6">
       <form onSubmit={run} className="card space-y-4 p-6">
+        <h2 className="text-lg font-medium text-ink">Run a benchmark</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           <input name="supplier" required className="input" placeholder="Supplier (e.g. Datadog)" />
           <select name="purchaseType" className="input"><option value="renewal">Renewal</option><option value="new">New purchase</option></select>
@@ -57,7 +58,7 @@ export function BenchmarkTool() {
         </div>
         <textarea name="notes" className="input" rows={2} placeholder="Notes (optional): competitors considered, deadlines, discounts already offered" />
         {err && <p role="alert" className="text-sm text-red-600">{err} {err.includes("Upgrade") && <Link href="/app/billing" className="underline">Billing</Link>}</p>}
-        <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Benchmarking..." : "Run benchmark"}</button>
+        <button aria-label="Run benchmark" disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Please wait..." : "Sign up"}</button>
       </form>
 
       {out && (
@@ -72,7 +73,7 @@ export function BenchmarkTool() {
           <div><div className="eyebrow mb-2">Leverage</div><ul className="list-disc space-y-1 pl-5">{out.result.leverage.map((l) => <li key={l}>{l}</li>)}</ul></div>
           {out.result.alternatives.length > 0 && <div><div className="eyebrow mb-2">Alternatives</div>{out.result.alternatives.map((a) => <p key={a.name}><b className="text-ink">{a.name}</b>: {a.note}</p>)}</div>}
           <p className="text-xs text-muted">{out.result.disclaimer}</p>
-          <Link href={`/app/negotiations?benchmark=${out.id}`} className="btn btn-dark">Build negotiation plan</Link>
+          <Link href={`/app/negotiations?benchmark=${out.id}`} className="btn btn-dark" aria-label="Build negotiation plan">Sign up</Link>
         </div>
       )}
     </div>

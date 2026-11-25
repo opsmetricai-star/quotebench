@@ -20,7 +20,7 @@ export function AdminForm() {
       <input name="reference" required className="input" placeholder="Selar order reference" />
       <input name="months" type="number" min={1} max={24} defaultValue={1} className="input" aria-label="Months paid" />
       {msg && <p role="alert" className={`text-sm ${msg.ok ? "text-emerald-700" : "text-red-600"}`}>{msg.text}</p>}
-      <button className="btn btn-dark">Activate</button>
+      <button aria-label="Activate plan" className="btn btn-dark">Sign up</button>
     </form>
   );
 }

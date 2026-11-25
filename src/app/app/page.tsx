@@ -22,7 +22,7 @@ export default async function Dashboard() {
   return (
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3"><h1 className="text-3xl font-medium tracking-tight text-ink">Dashboard</h1>
-        <Link href="/app/benchmarks" className="btn btn-dark">New benchmark</Link></div>
+        <Link href="/app/benchmarks" className="btn btn-dark" aria-label="New benchmark">Sign up</Link></div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card p-6"><div className="eyebrow">Savings identified (last 5)</div><div className="mt-2 text-3xl font-medium text-ink">{money(identified)}</div></div>
         <div className="card p-6"><div className="eyebrow">Savings realized</div><div className="mt-2 text-3xl font-medium text-ink">{money(realized)}</div></div>

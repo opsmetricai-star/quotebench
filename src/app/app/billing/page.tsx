@@ -28,7 +28,7 @@ export default async function Billing({ searchParams }: { searchParams: Promise<
             <div className="eyebrow">{p.name}</div><div className="mt-2 text-3xl font-medium text-ink">${p.price}<span className="text-base font-normal text-muted"> / mo</span></div>
             <ul className="mt-4 flex-1 space-y-1.5 text-[15px]">{p.features.map((f) => <li key={f} className="flex gap-2"><Check />{f}</li>)}</ul>
             {planId === p.id ? <div className="mt-5 text-sm text-brand">Your current plan</div> :
-              <a href={p.checkoutUrl!} target="_blank" rel="noopener noreferrer" className="btn btn-dark mt-5 justify-center">{planId === "trial" ? "Upgrade" : "Switch"} to {p.name}</a>}
+              <a href={p.checkoutUrl!} target="_blank" rel="noopener noreferrer" className="btn btn-dark mt-5 justify-center"><span aria-hidden>Sign up</span><span className="sr-only">{planId === "trial" ? "Upgrade" : "Switch"} to {p.name} on Selar</span></a>}
           </div>
         ))}
       </div>

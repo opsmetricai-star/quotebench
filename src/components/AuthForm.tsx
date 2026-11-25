@@ -11,7 +11,7 @@ const HEADINGS: Record<Mode, string> = {
   forgot: "Reset your password",
   reset: "Choose a new password",
 };
-const BUTTONS: Record<Mode, string> = { login: "Log in", signup: "Create account", forgot: "Send reset link", reset: "Save new password" };
+const BUTTONS: Record<Mode, string> = { login: "Log in", signup: "Create account", forgot: "Log in", reset: "Log in" };
 
 export function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter();

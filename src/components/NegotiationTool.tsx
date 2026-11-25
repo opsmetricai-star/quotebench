@@ -20,6 +20,7 @@ export function NegotiationTool({ benchmarkId, supplier, current, target }: { be
   }
   return (
     <form onSubmit={submit} className="card space-y-4 p-6">
+      <h2 className="text-lg font-medium text-ink">Build a negotiation plan</h2>
       <div className="grid gap-4 sm:grid-cols-3">
         <input name="supplier" required defaultValue={supplier} className="input" placeholder="Supplier" />
         <input name="currentPrice" required type="number" min="1" step="any" defaultValue={current ? Math.round(current) : undefined} className="input" placeholder="Current annual price" />
@@ -27,7 +28,7 @@ export function NegotiationTool({ benchmarkId, supplier, current, target }: { be
       </div>
       <textarea name="context" rows={2} className="input" placeholder="Context (optional): deadlines, competitors, relationship notes" />
       {err && <p role="alert" className="text-sm text-red-600">{err}</p>}
-      <button disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Building plan..." : "Build plan"}</button>
+      <button aria-label="Build negotiation plan" disabled={busy} className="btn btn-dark disabled:opacity-60">{busy ? "Please wait..." : "Sign up"}</button>
     </form>
   );
 }
