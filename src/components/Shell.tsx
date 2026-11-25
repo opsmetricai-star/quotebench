@@ -13,9 +13,10 @@ export function Logo({ light = false }: { light?: boolean }) {
 
 export const NAV = [
   { href: "/quinn", label: "Quinn" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/solutions", label: "Solutions" },
   { href: "/marketplace", label: "Marketplace" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/enablement", label: "Guide" },
   { href: "/about", label: "About" },
 ];
 
@@ -40,7 +41,8 @@ export function Header() {
 }
 
 const FOOT = [
-  { h: "Product", l: [["Quinn", "/quinn"], ["Marketplace", "/marketplace"], ["Categories", "/categories"], ["Pricing", "/pricing"], ["Guide", "/enablement"]] },
+  { h: "Product", l: [["Quinn", "/quinn"], ["How it works", "/how-it-works"], ["Marketplace", "/marketplace"], ["Categories", "/categories"], ["Pricing", "/pricing"], ["Guide", "/enablement"]] },
+  { h: "Solutions", l: [["Procurement", "/solutions/procurement"], ["Finance", "/solutions/finance"], ["IT and operations", "/solutions/it"]] },
   { h: "Company", l: [["About", "/about"]] },
   { h: "Legal", l: [["Terms", "/legal/terms"], ["Privacy", "/legal/privacy"], ["Security", "/legal/security"]] },
 ];
@@ -49,7 +51,7 @@ export function Footer() {
   return (
     <footer className="mt-auto bg-white">
       <div className="mx-auto max-w-[1200px] px-5 py-14">
-        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
             <Logo />
             <p className="mt-4 max-w-[260px] text-sm text-muted">The AI engine for software pricing, contracts and negotiation.</p>
@@ -86,7 +88,7 @@ export function CtaBand({
   body = "QuoteBench benchmarks each quote, audits each contract and drafts each negotiation, so your team captures savings before the renewal date, not after.",
 }) {
   return (
-    <section className="bg-night py-24 text-center text-white">
+    <section className="band-bg py-24 text-center text-white">
       <div className="mx-auto max-w-[760px] px-5">
         <h2 className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.1] tracking-tight">{title}</h2>
         <p className="mx-auto mt-5 max-w-[560px] text-lg text-white/70">{body}</p>

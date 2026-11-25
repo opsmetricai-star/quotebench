@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { SUPPLIERS } from "@/lib/suppliers";
+import { slugify } from "@/lib/content";
 
 export function Marketplace() {
   const [q, setQ] = useState("");
@@ -14,14 +15,14 @@ export function Marketplace() {
       <div className="eyebrow mb-5">Popular suppliers</div>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {list.map(([n, c, d]) => (
-          <Link key={n} href={`/signup`} className="card group p-6 transition hover:-translate-y-0.5 hover:border-brand">
+          <Link key={n} href={`/marketplace/${slugify(n)}`} className="card group p-6 transition hover:-translate-y-0.5 hover:border-brand">
             <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#f8ecf0] font-semibold text-brand">{n[0]}</span>
               <div><div className="font-medium text-ink">{n}</div><div className="text-xs text-muted">{c}</div></div></div>
             <p className="mt-4 text-[15px] leading-relaxed">{d}</p>
-            <div className="mt-4 text-sm font-medium text-brand">Benchmark this supplier</div>
+            <div className="mt-4 text-sm font-medium text-brand">View pricing guidance</div>
           </Link>
         ))}
-        {list.length === 0 && <p className="text-muted">No match in the directory. Any supplier can be benchmarked inside the app.</p>}
+        {list.length === 0 && <p className="text-muted">No match in the directory. Any supplier can still be benchmarked inside the app after you sign up.</p>}
       </div>
     </section>
   );

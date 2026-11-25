@@ -2,6 +2,8 @@ import Link from "next/link";
 import { CtaBand } from "@/components/Shell";
 import { Check } from "@/components/Icons";
 import { BenchmarkMock, LeverageMock, NegotiationMock, ReviewMock, SavingsBars, TeamTabs } from "@/components/Mocks";
+import { Compare, Faq, SolutionsTeaser, Steps, UseCases } from "@/components/Sections";
+import { HOME_FAQ } from "@/lib/content";
 
 const ENGINE = [
   ["Analyzes", "Reads every quote line by line and prices it against the market for your seat count, term and deal type."],
@@ -20,7 +22,7 @@ const BLOCKS = [
 export default function Home() {
   return (
     <>
-      <section className="mx-auto max-w-[1200px] px-5 pb-20 pt-20 text-center">
+      <section className="hero-bg px-5 pb-24 pt-24 text-center">
         <div className="eyebrow fade-up">The AI engine for software spend</div>
         <h1 className="h1 fade-up mx-auto mt-6 max-w-[800px]">
           Cut software costs with an AI that prices, audits and negotiates every deal.
@@ -76,6 +78,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <SolutionsTeaser />
+      <Steps />
 
       <section className="mx-auto max-w-[1200px] px-5 pb-24">
         <div className="mb-10 text-center">
@@ -140,7 +145,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-night py-24 text-white">
+      <UseCases />
+      <Compare />
+      <Faq items={HOME_FAQ} />
+
+      <section className="band-bg py-24 text-white">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 px-5 md:grid-cols-2">
           <div>
             <div className="eyebrow !text-white/60">Security and governance</div>
